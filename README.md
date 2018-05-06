@@ -12,32 +12,36 @@ Letsencrypt cert auto getting and renewal script based on original [certbot/cert
 * First, you need to set up your web server so that it gave the contents of the `/.well-known/acme-challenge` directory properly. 
   Example, for nginx add location for your server:
 ```nginx
-    location /.well-known/acme-challenge {
-        default_type "text/plain";
-        root         /tmp/letsencrypt;
-    }
+  location /.well-known/acme-challenge {
+    default_type "text/plain";
+    root         /tmp/letsencrypt;
+  }
 ```
+
 
 * Then run your web server image with letsencrypt-webroot-multi connected volumes:
 ```bash
-   -v /var/www/letsencrypt:/tmp/letsencrypt
+  -v /var/www/letsencrypt:/tmp/letsencrypt
 ```
+
 
 * Write a `/etc/letsencrypt/certs.lst` file for configuration:
 ```
-   email@example.com example.com www.example.com
-   email@universe.org universe.org
+  email@example.com example.com www.example.com
+  email@universe.org universe.org
 ```
+
 
 * Run letsencrypt-webroot-multi image:
 ```bash
-   docker run \
-     --restart always \
-     --name letsencrypt \
-     -v /data/letsencrypt:/etc/letsencrypt \
-     -v /data/letsencrypt-www:/tmp/letsencrypt \
-     raudssus/letsencrypt-webroot-multi
+  docker run \
+    --restart always \
+    --name letsencrypt \
+    -v /data/letsencrypt:/etc/letsencrypt \
+    -v /data/letsencrypt-www:/tmp/letsencrypt \
+    raudssus/letsencrypt-webroot-multi
 ```
+
 
 * Configure your app to use certificates in the following path:
 
@@ -54,13 +58,10 @@ Letsencrypt cert auto getting and renewal script based on original [certbot/cert
 **NOTE**: You should connect `/etc/letsencrypt` directory fully, because if you connect just `/etc/letsencrypt/live`, then symlinks to your certificates inside it will not work!
 
 
-
-
 ## Docker-compose
 
-This is example of letsencrypt-webroot-multi with nginx configuration:
+This is example of letsencrypt-webroot-multi `docker-compose.yml` with nginx configuration:
 
-`docker-compose.yml`
 ```yaml
 nginx:
   restart: always
