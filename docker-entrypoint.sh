@@ -35,15 +35,15 @@ le_renew () {
 
 le_check () {
   cert_file="/etc/letsencrypt/live/$2/fullchain.pem"
-    
+
   if [ -f $cert_file ]; then
 
     exp=$(date -d "`openssl x509 -in $cert_file -text -noout|grep "Not After"|cut -c 25-`" +%s)
     datenow=$(date -d "now" +%s)
     days_exp=$[ ( $exp - $datenow ) / 86400 ]
-        
+
     echo "Checking expiration date for $2..."
-    
+
     if [ "$days_exp" -gt "$exp_limit" ]; then
         echo "The certificate is up to date, no need for renewal ($days_exp days left)."
     else
@@ -85,7 +85,7 @@ while true; do
 
   while IFS='' read -r line || [[ -n "$line" ]]; do
     le_check $line
-  done < "/etc/letsencrypt/certs.lst"
+  done < "/etc/letsencrypt/certs.txt"
 
   sleep $(( $waiting_time * 60 * 60 ))
 

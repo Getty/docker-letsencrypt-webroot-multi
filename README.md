@@ -26,8 +26,8 @@ Letsencrypt cert auto getting and renewal script based on original [certbot/cert
 ```
 
 
-* Write a `/etc/letsencrypt/certs.lst` file for configuration:
-```
+* Write a `/etc/letsencrypt/certs.txt` file for configuration:
+```text
   email@example.com example.com www.example.com
   email@universe.org universe.org
 ```
@@ -94,4 +94,4 @@ letsencrypt:
 * **CHMOD**: Permissions for certs. Defaults to `644`.
 * **CHMOD_DIRECTORY**: Permissions for cert directories. Defaults to `755`.
 * **CERTBOT_ADDITIONAL**: Additional parameter for the `certonly` call to `certbot`
-* **WAITING_TIME**: Waiting this many hours between checks of `certs.lst` and renewal check of certs. Defaults to 6.
+* **WAITING_TIME**: Waiting this many hours between checks of `certs.txt` and renewal check of certs. Defaults to 6.
